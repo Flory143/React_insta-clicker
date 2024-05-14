@@ -1,6 +1,8 @@
 import React, { Dispatch, SetStateAction } from "react";
 import styles from "./NavigationMenu.module.css";
-import Upgrade from "../../assets/upgrade.svg";
+import clickerImg from "../../assets/clicker.svg";
+import upgradeImg from "../../assets/upgrade.svg";
+import currencyImg from "../../assets/currency.svg";
 
 interface Props {
   setCurrentComponent: Dispatch<SetStateAction<number>>;
@@ -14,13 +16,13 @@ const NavigationMenu: React.FC<Props> = ({ setCurrentComponent }) => {
   return (
     <div className={styles.navigationMenu}>
       <button className={styles.button} onClick={() => handleButtonClick(1)}>
-        1
+        <img src={clickerImg} alt="currency" width={"50%"} />
       </button>
       <button className={styles.button} onClick={() => handleButtonClick(2)}>
-        <Upgrade />
+        <img src={upgradeImg} alt="currency" width={"50%"} />
       </button>
       <button className={styles.button} onClick={() => handleButtonClick(3)}>
-        3
+        <img src={currencyImg} alt="currency" width={"50%"} />
       </button>
     </div>
   );

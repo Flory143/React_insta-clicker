@@ -3,12 +3,16 @@ import { useEffect, useState } from "react";
 import ClickerBtn from "../ClickerBtn/ClickerBtn";
 import ClickerUpgrades from "../ClickerUpgrades/ClickerUpgrades";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
+import styles from "./ClickerGui.module.css";
+import currencyImg from "../../assets/currency.svg";
 
 function ClickerGui() {
-  const [count, setCount] = useState(10000);
+  const [count, setCount] = useState(100000);
 
   const [perClick, setPerClick] = useState(1);
   const [perSecond, setPerSecond] = useState(0);
+  const [upgradeCostPerClick, setUpgradeCostPerClick] = useState(10);
+  const [upgradeCostPerSecond, setUpgradeCostPerSecond] = useState(100);
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
@@ -47,7 +51,7 @@ function ClickerGui() {
       setIsButtonDisabled(true);
       setTimeout(() => {
         setIsButtonDisabled(false);
-      }, 1);
+      }, 80);
     }
   };
 
@@ -55,7 +59,10 @@ function ClickerGui() {
     <div className="container">
       <div className="inner-container">
         <h1>InstaClicker</h1>
-        <h1>{addCommas(Math.round(count).toLocaleString())}</h1>
+        <div className={styles.currency}>
+          <h1>{addCommas(Math.round(count).toLocaleString())}</h1>
+          <img src={currencyImg} alt="asd" width={"30px"} />
+        </div>
 
         {currentComponent === 1 ? (
           <ClickerBtn click={handleButtonClick} />
@@ -67,6 +74,10 @@ function ClickerGui() {
             setPerClick={setPerClick}
             perSecond={perSecond}
             setPerSecond={setPerSecond}
+            upgradeCostPerClick={upgradeCostPerClick}
+            setUpgradeCostPerClick={setUpgradeCostPerClick}
+            upgradeCostPerSecond={upgradeCostPerSecond}
+            setUpgradeCostPerSecond={setUpgradeCostPerSecond}
           />
         ) : null}
         <div className="clicker"></div>

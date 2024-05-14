@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import styles from "./ClickerUpgrades.module.css";
 import UpgradeBtn from "../UpgradeBtn/UpgradeBtn";
 
@@ -9,6 +9,10 @@ interface Props {
   setPerClick: Dispatch<SetStateAction<number>>;
   perSecond: number;
   setPerSecond: Dispatch<SetStateAction<number>>;
+  upgradeCostPerClick: number;
+  setUpgradeCostPerClick: Dispatch<SetStateAction<number>>;
+  upgradeCostPerSecond: number;
+  setUpgradeCostPerSecond: Dispatch<SetStateAction<number>>;
 }
 
 const ClickerUpgrades: React.FC<Props> = ({
@@ -18,10 +22,11 @@ const ClickerUpgrades: React.FC<Props> = ({
   setPerClick,
   perSecond,
   setPerSecond,
+  upgradeCostPerClick,
+  setUpgradeCostPerClick,
+  upgradeCostPerSecond,
+  setUpgradeCostPerSecond,
 }) => {
-  const [upgradeCostPerClick, setUpgradeCostPerClick] = useState(10);
-  const [upgradeCostPerSecond, setUpgradeCostPerSecond] = useState(100);
-
   const upgradePerClick = () => {
     if (count >= upgradeCostPerClick) {
       setCount(count - upgradeCostPerClick);
@@ -42,9 +47,13 @@ const ClickerUpgrades: React.FC<Props> = ({
 
       setPerSecond(perSecond + 5);
 
-      setUpgradeCostPerSecond(
-        (upgradeCostPerSecond / (perSecond + 1) + 10) * 100
-      );
+      if (perSecond === 0) {
+        setUpgradeCostPerSecond(Math.round(upgradeCostPerSecond / 5 + 5) * 5);
+      } else {
+        setUpgradeCostPerSecond(
+          Math.round(upgradeCostPerSecond / perSecond + 5) * perSecond
+        );
+      }
     } else {
       return false;
     }
