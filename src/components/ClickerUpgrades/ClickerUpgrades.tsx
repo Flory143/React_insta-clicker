@@ -19,18 +19,18 @@ const ClickerUpgrades: React.FC<Props> = ({
   perSecond,
   setPerSecond,
 }) => {
-  const [upgradeCostPerClick, setUpgradeCostPerClick] = useState(2);
-  const [upgradeCostPerSecond, setUpgradeCostPerSecond] = useState(5);
+  const [upgradeCostPerClick, setUpgradeCostPerClick] = useState(10);
+  const [upgradeCostPerSecond, setUpgradeCostPerSecond] = useState(100);
 
   const upgradePerClick = () => {
     if (count >= upgradeCostPerClick) {
       setCount(count - upgradeCostPerClick);
 
-      setUpgradeCostPerClick(
-        Math.round(upgradeCostPerClick * (1 + Math.random() / 1.5))
-      );
+      perClick === 1 ? setPerClick(5) : setPerClick(perClick + 5);
 
-      setPerClick(Math.round(perClick + 50 * Math.random()));
+      setUpgradeCostPerClick(
+        Math.round((upgradeCostPerClick / perClick + 5) * perClick)
+      );
     } else {
       return false;
     }
@@ -39,10 +39,12 @@ const ClickerUpgrades: React.FC<Props> = ({
   const upgradePerSecond = () => {
     if (count >= upgradeCostPerSecond) {
       setCount(count - upgradeCostPerSecond);
+
+      setPerSecond(perSecond + 5);
+
       setUpgradeCostPerSecond(
-        Math.round(upgradeCostPerSecond * (1 + Math.random() / 1.5))
+        (upgradeCostPerSecond / (perSecond + 1) + 10) * 100
       );
-      setPerSecond(Math.round(perSecond + 100 * Math.random()));
     } else {
       return false;
     }
@@ -51,16 +53,18 @@ const ClickerUpgrades: React.FC<Props> = ({
   return (
     <div className={styles.upgrades}>
       <h2>Улучшения</h2>
-      <UpgradeBtn
-        onClick={upgradePerClick}
-        text={"Клик: " + perClick}
-        cost={"Цена: " + upgradeCostPerClick}
-      />
-      <UpgradeBtn
-        onClick={upgradePerSecond}
-        text={"Клик: " + perSecond}
-        cost={"Цена: " + upgradeCostPerSecond}
-      />
+      <div className={styles.upgradesBtns}>
+        <UpgradeBtn
+          onClick={upgradePerClick}
+          text={"Клик: " + perClick}
+          cost={"Цена: " + upgradeCostPerClick}
+        />
+        <UpgradeBtn
+          onClick={upgradePerSecond}
+          text={"В секунду: " + perSecond}
+          cost={"Цена: " + upgradeCostPerSecond}
+        />
+      </div>
     </div>
   );
 };
